@@ -25,7 +25,7 @@ from os.path import abspath, dirname, join
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 
-LIBRARY_NAME = 'ImapLibrary'
+LIBRARY_NAME = 'ImapLibrary2'
 CWD = abspath(dirname(__file__))
 VERSION_PATH = join(CWD, 'src', LIBRARY_NAME, 'version.py')
 exec(compile(open(VERSION_PATH).read(), VERSION_PATH, 'exec'))
@@ -34,11 +34,11 @@ with codecs.open(join(CWD, 'README.rst'), encoding='utf-8') as reader:
     LONG_DESCRIPTION = reader.read()
 
 setup(
-    name='robotframework-%s2' % LIBRARY_NAME.lower(),
+    name='robotframework-%s' % LIBRARY_NAME.lower(),
     version=VERSION,  # pylint: disable=undefined-variable  # noqa
     description='A IMAP email testing library for Robot Framework',
     long_description=LONG_DESCRIPTION,
-    url='https://github.com/lasselindqvist/robotframework-%s2' % LIBRARY_NAME.lower(),
+    url='https://github.com/lasselindqvist/robotframework-%s' % LIBRARY_NAME.lower(),
     author='Lasse Lindqvist',
     author_email='lasselindqvist@users.noreply.github.com',
     license='Apache License, Version 2.0',
