@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#    Copyright 2015-2016 Richard Huang <rickypc@users.noreply.github.com>
+#    Copyright 2015-2016 Richard Huang <lasselindqvist@users.noreply.github.com>
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -34,13 +34,13 @@ with codecs.open(join(CWD, 'README.rst'), encoding='utf-8') as reader:
     LONG_DESCRIPTION = reader.read()
 
 setup(
-    name='robotframework-%s' % LIBRARY_NAME.lower(),
+    name='robotframework-%s2' % LIBRARY_NAME.lower(),
     version=VERSION,  # pylint: disable=undefined-variable  # noqa
     description='A IMAP email testing library for Robot Framework',
     long_description=LONG_DESCRIPTION,
-    url='https://github.com/rickypc/robotframework-%s' % LIBRARY_NAME.lower(),
-    author='Richard Huang',
-    author_email='rickypc@users.noreply.github.com',
+    url='https://github.com/lasselindqvist/robotframework-%s2' % LIBRARY_NAME.lower(),
+    author='Lasse Lindqvist',
+    author_email='lasselindqvist@users.noreply.github.com',
     license='Apache License, Version 2.0',
     classifiers=[
         'Development Status :: 4 - Beta',
