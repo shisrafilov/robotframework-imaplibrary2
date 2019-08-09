@@ -29,13 +29,13 @@ try:
 except ImportError:
     from urllib2 import urlopen
 from builtins import str as ustr
-from ImapLibrary.version import get_version
+from ImapLibrary2.version import get_version
 
 __version__ = get_version()
 
 
-class ImapLibrary(object):
-    """ImapLibrary is an email testing library for [http://goo.gl/lES6WM|Robot Framework].
+class ImapLibrary2(object):
+    """ImapLibrary2 is an email testing library for [http://goo.gl/lES6WM|Robot Framework].
 
     *Deprecated Keywords Warning*
 
@@ -74,11 +74,11 @@ class ImapLibrary(object):
     ROBOT_LIBRARY_VERSION = __version__
 
     def __init__(self):
-        """ImapLibrary can be imported without argument.
+        """ImapLibrary2 can be imported without argument.
 
         Examples:
         | = Keyword Definition =  | = Description =       |
-        | Library `|` ImapLibrary | Initiate Imap library |
+        | Library `|` ImapLibrary2 | Initiate Imap library |
         """
         self._email_index = None
         self._imap = None
