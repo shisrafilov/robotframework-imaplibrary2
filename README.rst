@@ -6,6 +6,8 @@ IMAP email testing library for Robot Framework
 Introduction
 ------------
 
+Note: This is a fork of https://github.com/rickypc/robotframework-imaplibrary
+
 ImapLibrary is a IMAP email testing library for `Robot Framework`_.
 
 More information about this library can be found in the `Keyword Documentation`_.
