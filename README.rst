@@ -224,18 +224,18 @@ Documentation and other similar content are provided under `Creative Commons Att
 .. |Docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
     :target: https://goo.gl/ntRuxC
     :alt: Keyword Documentation
-.. |Version| image:: https://img.shields.io/pypi/v/robotframework-imaplibrary.svg
+.. |Version| image:: https://img.shields.io/pypi/v/robotframework-imaplibrary2.svg
     :target: https://goo.gl/q66LcA
     :alt: Package Version
-.. |Status| image:: https://img.shields.io/pypi/status/robotframework-imaplibrary.svg
+.. |Status| image:: https://img.shields.io/pypi/status/robotframework-imaplibrary2.svg
     :target: https://goo.gl/q66LcA
     :alt: Development Status
-.. |Python| image:: https://img.shields.io/pypi/pyversions/robotframework-imaplibrary.svg
+.. |Python| image:: https://img.shields.io/pypi/pyversions/robotframework-imaplibrary2.svg
     :target: https://goo.gl/sXzgao
     :alt: Python Version
-.. |Download| image:: https://img.shields.io/pypi/dm/robotframework-imaplibrary.svg
+.. |Download| image:: https://img.shields.io/pypi/dm/robotframework-imaplibrary2.svg
     :target: https://goo.gl/q66LcA
     :alt: Monthly Download
-.. |License| image:: https://img.shields.io/pypi/l/robotframework-imaplibrary.svg
+.. |License| image:: https://img.shields.io/pypi/l/robotframework-imaplibrary2.svg
     :target: https://goo.gl/qpvnnB
     :alt: License
