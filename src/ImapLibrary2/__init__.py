@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+2#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 #    Copyright 2015-2016 Richard Huang <rickypc@users.noreply.github.com>
@@ -101,6 +101,9 @@ class ImapLibrary2(object):
         Examples:
         | Delete All Emails |
         """
+        typ, mails = self._imap.uid('search', None, 'ALL')
+        self._mails = mails[0].split()
+
         for mail in self._mails:
             self.delete_email(mail)
         self._imap.expunge()
