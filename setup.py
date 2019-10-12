@@ -30,7 +30,7 @@ CWD = abspath(dirname(__file__))
 VERSION_PATH = join(CWD, 'src', LIBRARY_NAME, 'version.py')
 exec(compile(open(VERSION_PATH).read(), VERSION_PATH, 'exec'))
 
-with codecs.open(join(CWD, 'README.rst'), encoding='utf-8') as reader:
+with codecs.open(join(CWD, 'README.md'), encoding='utf-8') as reader:
     LONG_DESCRIPTION = reader.read()
 
 setup(
@@ -38,6 +38,7 @@ setup(
     version=VERSION,  # pylint: disable=undefined-variable  # noqa
     description='A IMAP email testing library for Robot Framework',
     long_description=LONG_DESCRIPTION,
+	long_description_content_type='text/markdown',
     url='https://github.com/lasselindqvist/robotframework-%s' % LIBRARY_NAME.lower(),
     author='Lasse Lindqvist',
     author_email='lasselindqvist@users.noreply.github.com',
