@@ -14,7 +14,7 @@ Introduction
 Note: This is a fork of
 <https://github.com/rickypc/robotframework-imaplibrary>
 
-ImapLibrary is a IMAP email testing library for [Robot
+ImapLibrary2 is a IMAP email testing library for [Robot
 Framework](http://goo.gl/lES6WM).
 
 More information about this library can be found in the [Keyword
@@ -41,7 +41,7 @@ If you are interested to contribute back to this project, please see
 
 ``` {.sourceCode .robotframework}
 *** Settings ***
-Library    ImapLibrary
+Library    ImapLibrary2
 
 *** Test Cases ***
 Email Verification
@@ -75,7 +75,7 @@ The recommended installation method is using
 [pip](http://goo.gl/jlJCPE):
 
 ``` {.sourceCode .console}
-pip install robotframework-imaplibrary
+pip install robotframework-imaplibrary2
 ```
 
 The main benefit of using `pip` is that it automatically installs all
@@ -83,8 +83,8 @@ dependencies needed by the library. Other nice features are easy
 upgrading and support for un-installation:
 
 ``` {.sourceCode .console}
-pip install --upgrade robotframework-imaplibrary
-pip uninstall robotframework-imaplibrary
+pip install --upgrade robotframework-imaplibrary2
+pip uninstall robotframework-imaplibrary2
 ```
 
 Notice that using `--upgrade` above updates both the library and all its
@@ -92,7 +92,7 @@ dependencies to the latest version. If you want, you can also install a
 specific version:
 
 ``` {.sourceCode .console}
-pip install robotframework-imaplibrary==x.x.x
+pip install robotframework-imaplibrary2==x.x.x
 ```
 
 ### Proxy configuration
@@ -170,7 +170,7 @@ imported into your Robot test suite.
 
 ``` {.sourceCode .robotframework}
 *** Settings ***
-Library    ImapLibrary
+Library    ImapLibrary2
 ```
 
 See [Robot Framework User Guide](http://goo.gl/Q7dfPB) for more
