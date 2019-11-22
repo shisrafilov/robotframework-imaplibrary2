@@ -18,21 +18,7 @@ ImapLibrary2 is a IMAP email testing library for [Robot
 Framework](http://goo.gl/lES6WM).
 
 More information about this library can be found in the [Keyword
-Documentation](https://goo.gl/ntRuxC).
-
-Maintainership Transfer
------------------------
-
-Please note the new authoritative git repository for
-[robotframework-imaplibrary](https://goo.gl/q66LcA) package is:
-<https://github.com/rickypc/robotframework-imaplibrary>
-
-[robotframework-imaplibrary](https://goo.gl/q66LcA) package ownership is
-transitioned to me as the new project maintainer.
-
-I will go through the pull requests from previous repository, as well as
-issue list. I will try to accomodate as much as I could as time permit.
-**There is no need to re-post.**
+Documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html).
 
 If you are interested to contribute back to this project, please see
 **Contributing** section.
