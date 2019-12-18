@@ -21,7 +21,7 @@ IMAP Library - a IMAP email testing library.
 
 from sys import path
 path.append('src')
-from ImapLibrary import ImapLibrary
+from ImapLibrary2 import ImapLibrary2
 import mock
 import unittest
 
@@ -31,7 +31,7 @@ class ImapLibraryTests(unittest.TestCase):
 
     def setUp(self):
         """Instantiate the Imap library class."""
-        self.library = ImapLibrary()
+        self.library = ImapLibrary2()
         self.password = 'password'
         self.port = 143
         self.port_secure = 993
@@ -48,7 +48,7 @@ class ImapLibraryTests(unittest.TestCase):
 
     def test_should_have_default_values(self):
         """Imap library instance should have default values set."""
-        self.assertIsInstance(self.library, ImapLibrary)
+        self.assertIsInstance(self.library, ImapLibrary2)
         self.assertIsNone(self.library._email_index)
         self.assertIsNone(self.library._imap)
         self.assertIsInstance(self.library._mails, list)
@@ -59,7 +59,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.assertEqual(self.library.PORT_SECURE, self.port_secure)
         self.assertEqual(self.library.FOLDER, self.folder)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_open_secure_mailbox(self, mock_imap):
         """Open mailbox should open secure connection to IMAP server
         with requested credentials.
@@ -70,7 +70,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.login.assert_called_with(self.username, self.password)
         self.library._imap.select.assert_called_with(self.folder_check)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_open_secure_mailbox_with_custom_port(self, mock_imap):
         """Open mailbox should open secure connection to IMAP server
         with requested credentials and custom port.
@@ -81,7 +81,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.login.assert_called_with(self.username, self.password)
         self.library._imap.select.assert_called_with(self.folder_check)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_open_secure_mailbox_with_custom_folder(self, mock_imap):
         """Open mailbox should open secure connection to IMAP server with
         requested credentials to a custom folder
@@ -92,7 +92,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.login.assert_called_with(self.username, self.password)
         self.library._imap.select.assert_called_with('"Outbox"')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_open_secure_mailbox_with_server_key(self, mock_imap):
         """Open mailbox should open secure connection to IMAP server
         using 'server' key with requested credentials.
@@ -103,7 +103,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.login.assert_called_with(self.username, self.password)
         self.library._imap.select.assert_called_with(self.folder_check)
 
-    @mock.patch('ImapLibrary.IMAP4')
+    @mock.patch('ImapLibrary2.IMAP4')
     def test_should_open_non_secure_mailbox(self, mock_imap):
         """Open mailbox should open non-secure connection to IMAP server
         with requested credentials.
@@ -114,7 +114,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.login.assert_called_with(self.username, self.password)
         self.library._imap.select.assert_called_with(self.folder_check)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index(self, mock_imap):
         """Returns email index from connected IMAP session."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -127,7 +127,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                     '"%s"' % self.sender)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_with_sender_filter(self, mock_imap):
         """Returns email index from connected IMAP session
         with sender filter.
@@ -152,7 +152,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                     '"%s"' % self.sender)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_with_recipient_filter(self, mock_imap):
         """Returns email index from connected IMAP session
         with recipient filter.
@@ -177,7 +177,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                      '"%s"' % self.recipient)
         self.assertEqual(index, '0')      
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_with_subject_filter(self, mock_imap):
         """Returns email index from connected IMAP session
         with subject filter.
@@ -192,7 +192,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                      '"%s"' % self.subject)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_with_text_filter(self, mock_imap):
         """Returns email index from connected IMAP session with text filter."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -205,7 +205,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                      '"%s"' % self.text)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_with_status_filter(self, mock_imap):
         """Returns email index from connected IMAP session with status filter."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -217,7 +217,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.uid.assert_called_with('search', None, self.status)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_with_folder_filter(self, mock_imap):
         """Returns email index from connected IMAP session with
         folder filter.
@@ -232,7 +232,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.select.assert_called_with(self.folder_filter)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_without_filter(self, mock_imap):
         """Returns email index from connected IMAP session without filter."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -245,7 +245,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.assertEqual(index, '0')
 
     # DEPRECATED
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_from_deprecated_keyword(self, mock_imap):
         """Returns email index from connected IMAP session
         using deprecated keyword.
@@ -260,7 +260,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                      '"%s"' % self.sender)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_return_email_index_after_delay(self, mock_imap):
         """Returns email index from connected IMAP session after some delay."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -273,7 +273,7 @@ class ImapLibraryTests(unittest.TestCase):
                                                      '"%s"' % self.sender)
         self.assertEqual(index, '0')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_raise_exception_on_timeout(self, mock_imap):
         """Raise exception on timeout."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -286,7 +286,7 @@ class ImapLibraryTests(unittest.TestCase):
             self.assertTrue("No email received within 0s" in context.exception)
         self.library._imap.select.assert_called_with(self.folder_check)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_raise_exception_on_select_error(self, mock_imap):
         """Raise exception on imap select error."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -297,7 +297,7 @@ class ImapLibraryTests(unittest.TestCase):
             self.assertTrue("imap.select error: NOK, ['1']" in context.exception)
         self.library._imap.select.assert_called_with(self.folder_check)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_raise_exception_on_search_error(self, mock_imap):
         """Raise exception on imap search error."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -312,7 +312,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.uid.assert_called_with('search', None, 'FROM', '"%s"' %
                                                      self.sender)
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_delete_all_emails(self, mock_imap):
         """Delete all emails."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -322,7 +322,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.uid.assert_called_with('store', '0', '+FLAGS', r'(\DELETED)')
         self.library._imap.expunge.assert_called_with()
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_delete_email(self, mock_imap):
         """Delete specific email."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -331,7 +331,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.uid.assert_called_with('store', '0', '+FLAGS', r'(\DELETED)')
         self.library._imap.expunge.assert_called_with()
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_mark_all_emails_as_read(self, mock_imap):
         """Mark all emails as read."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -341,7 +341,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.uid.assert_called_with('store', '0', '+FLAGS', r'\SEEN')
 
     # DEPRECATED
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_mark_all_emails_as_read_from_deprecated_keyword(self, mock_imap):
         """Mark all emails as read using deprecated keyword."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -350,7 +350,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library.mark_as_read()
         self.library._imap.uid.assert_called_with('store', '0', '+FLAGS', r'\SEEN')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_mark_email_as_read(self, mock_imap):
         """Mark specific email as read."""
         self.library.open_mailbox(host=self.server, user=self.username,
@@ -358,7 +358,7 @@ class ImapLibraryTests(unittest.TestCase):
         self.library.mark_email_as_read('0')
         self.library._imap.uid.assert_called_with('store', '0', '+FLAGS', r'\SEEN')
 
-    @mock.patch('ImapLibrary.IMAP4_SSL')
+    @mock.patch('ImapLibrary2.IMAP4_SSL')
     def test_should_close_mailbox(self, mock_imap):
         """Close opened connection."""
         self.library.open_mailbox(host=self.server, user=self.username,
