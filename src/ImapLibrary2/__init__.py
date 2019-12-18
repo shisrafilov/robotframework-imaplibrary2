@@ -101,9 +101,7 @@ class ImapLibrary2(object):
         Examples:
         | Delete All Emails |
         """
-        typ, mails = self._imap.uid('search', None, 'ALL')
-        self._mails = mails[0].split()
-
+        self._get_all_emails()
         for mail in self._mails:
             self.delete_email(mail)
         self._imap.expunge()
@@ -217,6 +215,7 @@ class ImapLibrary2(object):
         Examples:
         | Mark All Emails As Read |
         """
+        self._get_all_emails()
         for mail in self._mails:
             self._imap.uid('store', mail, '+FLAGS', r'\SEEN')
 
@@ -408,3 +407,10 @@ class ImapLibrary2(object):
         self._email_index = email_index
         self._mp_msg = msg
         self._mp_iter = msg.walk()
+
+    def _get_all_emails(self):
+        """Saves all existing emails to internal variable."""
+        typ, mails = self._imap.uid('search', None, 'ALL')
+        self._mails = mails[0].split()
+
+
