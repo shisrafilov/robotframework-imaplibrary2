@@ -38,7 +38,7 @@ setup(
     version=VERSION,  # pylint: disable=undefined-variable  # noqa
     description='A IMAP email testing library for Robot Framework',
     long_description=LONG_DESCRIPTION,
-	long_description_content_type='text/markdown',
+    long_description_content_type='text/markdown',
     url='https://github.com/lasselindqvist/robotframework-%s' % LIBRARY_NAME.lower(),
     author='Lasse Lindqvist',
     author_email='lasselindqvist@users.noreply.github.com',
