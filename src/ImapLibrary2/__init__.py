@@ -345,7 +345,7 @@ class ImapLibrary2(object):
         | Walk Multipart Email | INDEX |
         """
         if not self._is_walking_multipart(email_index):
-            data = self._imap.uid('fetch', email_index, '(RFC822)')[1][0][1]
+            data = self._imap.uid('fetch', email_index, '(RFC822)')[1][0][1].decode('UTF-8')
             msg = message_from_string(data)
             self._start_multipart_walk(email_index, msg)
         try:
@@ -375,6 +375,7 @@ class ImapLibrary2(object):
         criteria = []
         recipient = kwargs.pop('recipient', kwargs.pop('to_email', kwargs.pop('toEmail', None)))
         sender = kwargs.pop('sender', kwargs.pop('from_email', kwargs.pop('fromEmail', None)))
+		cc = kwargs.pop('cc', kwargs.pop('cc_email', kwargs.pop('ccEmail', None)))
         status = kwargs.pop('status', None)
         subject = kwargs.pop('subject', None)
         text = kwargs.pop('text', None)
@@ -382,6 +383,8 @@ class ImapLibrary2(object):
             criteria += ['TO', '"%s"' % recipient]
         if sender:
             criteria += ['FROM', '"%s"' % sender]
+		if cc:
+            criteria += ['CC', '"%s"' % cc]
         if subject:
             criteria += ['SUBJECT', '"%s"' % subject]
         if text:
