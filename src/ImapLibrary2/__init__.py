@@ -356,6 +356,9 @@ class ImapLibrary2(object):
         # return number of parts
         return len(self._mp_msg.get_payload())
 
+    def get_email_count(self, **kwargs):
+        return len(self._check_emails(**kwargs))
+
     def _check_emails(self, **kwargs):
         """Returns filtered email."""
         folder = '"%s"' % str(kwargs.pop('folder', self.FOLDER))
@@ -375,7 +378,7 @@ class ImapLibrary2(object):
         criteria = []
         recipient = kwargs.pop('recipient', kwargs.pop('to_email', kwargs.pop('toEmail', None)))
         sender = kwargs.pop('sender', kwargs.pop('from_email', kwargs.pop('fromEmail', None)))
-		cc = kwargs.pop('cc', kwargs.pop('cc_email', kwargs.pop('ccEmail', None)))
+        cc = kwargs.pop('cc', kwargs.pop('cc_email', kwargs.pop('ccEmail', None)))
         status = kwargs.pop('status', None)
         subject = kwargs.pop('subject', None)
         text = kwargs.pop('text', None)
@@ -383,7 +386,7 @@ class ImapLibrary2(object):
             criteria += ['TO', '"%s"' % recipient]
         if sender:
             criteria += ['FROM', '"%s"' % sender]
-		if cc:
+        if cc:
             criteria += ['CC', '"%s"' % cc]
         if subject:
             criteria += ['SUBJECT', '"%s"' % subject]
@@ -415,5 +418,3 @@ class ImapLibrary2(object):
         """Saves all existing emails to internal variable."""
         typ, mails = self._imap.uid('search', None, 'ALL')
         self._mails = mails[0].split()
-
-
