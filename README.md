@@ -1,7 +1,7 @@
 IMAP email testing library for Robot Framework
 ==============================================
 
-![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg%0A%20:target:%20https://goo.gl/ntRuxC%0A%20:alt:%20Keyword%20Documentation)
+![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg%0A%20:target:%20https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html)
 ![Version](https://img.shields.io/pypi/v/robotframework-imaplibrary2.svg%0A%20:target:%20https://goo.gl/q66LcA%0A%20:alt:%20Package%20Version)
 ![Status](https://img.shields.io/pypi/status/robotframework-imaplibrary2.svg%0A%20:target:%20https://goo.gl/q66LcA%0A%20:alt:%20Development%20Status)
 ![Python](https://img.shields.io/pypi/pyversions/robotframework-imaplibrary2.svg%0A%20:target:%20https://goo.gl/sXzgao%0A%20:alt:%20Python%20Version)
@@ -117,7 +117,7 @@ gpg --keyserver pgp.mit.edu --search-keys D1406DE7
 -   Verify the package against its PGP signature:
 
 ``` {.sourceCode .console}
-gpg --verify robotframework-imaplibrary-x.x.x.tar.gz.asc robotframework-imaplibrary-x.x.x.tar.gz
+gpg --verify robotframework-imaplibrary2-x.x.x.tar.gz.asc robotframework-imaplibrary2-x.x.x.tar.gz
 ```
 
 -   Extract each source distribution to a temporary location.
@@ -137,7 +137,7 @@ Directory Layout
 ----------------
 
 doc/
-:   [Keyword documentation](https://goo.gl/ntRuxC)
+:   [Keyword documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html)
 
 src/
 :   Python source code
@@ -169,7 +169,7 @@ Documentation](http://goo.gl/zy53tf).
 Building Keyword Documentation
 ------------------------------
 
-The [Keyword Documentation](https://goo.gl/ntRuxC) can be found online,
+The [Keyword Documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html) can be found online,
 if you need to generate the keyword documentation, run:
 
 ``` {.sourceCode .console}
