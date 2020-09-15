@@ -19,7 +19,7 @@
 IMAP Library - a IMAP email testing library.
 """
 
-from email import message_from_string
+from email import message_from_bytes
 from imaplib import IMAP4, IMAP4_SSL
 from re import findall
 from codecs import decode
@@ -346,7 +346,7 @@ class ImapLibrary2(object):
         """
         if not self._is_walking_multipart(email_index):
             data = self._imap.uid('fetch', email_index, '(RFC822)')[1][0][1].decode('UTF-8')
-            msg = message_from_string(data)
+            msg = message_from_bytes(data)
             self._start_multipart_walk(email_index, msg)
         try:
             self._part = next(self._mp_iter)
