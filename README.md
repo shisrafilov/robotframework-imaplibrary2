@@ -180,6 +180,14 @@ Test the testing library, talking about dogfooding, let's run:
 make test
 ```
 
+Deploying to Pypi
+------------
+
+``` {.sourceCode .console}
+python setup.py sdist bdist_wheel
+twine upload dist/*
+```
+
 Contributing
 ------------
 
