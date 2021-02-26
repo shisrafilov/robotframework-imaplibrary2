@@ -5,3 +5,6 @@ __pycache__/
 .coverage
 dist
 htmlcov
+.DS_Store
+/pyproject.toml
+/.vscode

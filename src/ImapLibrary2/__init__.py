@@ -30,6 +30,7 @@ except ImportError:
     from urllib2 import urlopen
 from builtins import str as ustr
 from ImapLibrary2.version import get_version
+from ImapLibrary2.imap_proxy import IMAP4Proxy, IMAP4SSLProxy
 
 __version__ = get_version()
 
@@ -277,18 +278,45 @@ class ImapLibrary2(object):
         - ``port``: The IMAP port number. (Default None)
         - ``user``: The username to be use to authenticate mailbox on given ``host``.
         - ``folder``: The email folder to read from. (Default INBOX)
+        - ``proxy_host``: Proxy host to connect via. (Default None)
+        - ``proxy_port``: Proxy port to connect via. (Default None)
+        - ``proxy_user``: Proxy username to connect via. (Default None)
+        - ``proxy_password``: Proxy password to connect via. (Default None)
+        - ``proxy_type``: Proxy type to connect via. Available values are: http, socks4, socks5 (Default http)
 
         Examples:
         | Open Mailbox | host=HOST | user=USER | password=SECRET |
         | Open Mailbox | host=HOST | user=USER | password=SECRET | is_secure=False |
         | Open Mailbox | host=HOST | user=USER | password=SECRET | port=8000 |
         | Open Mailbox | host=HOST | user=USER | password=SECRET | folder=Drafts
+        | Open Mailbox | host=HOST | user=USER | password=SECRET | folder=Drafts | proxy_host=ProxyHost | proxy_port=8080 | proxy_username=ProxyUsername | proxy_password=ProxyPassword | proxy_type=http
         """
         host = kwargs.pop('host', kwargs.pop('server', None))
         is_secure = kwargs.pop('is_secure', 'True') == 'True'
         port = int(kwargs.pop('port', self.PORT_SECURE if is_secure else self.PORT))
         folder = '"%s"' % str(kwargs.pop('folder', self.FOLDER))
-        self._imap = IMAP4_SSL(host, port) if is_secure else IMAP4(host, port)
+        proxy_host = kwargs.pop('proxy_host', None)
+        proxy_port = kwargs.pop('proxy_port', None)
+        proxy_user = kwargs.pop('proxy_user', None)
+        proxy_password = kwargs.pop('proxy_password', None)
+        proxy_type = kwargs.pop('proxy_type', 'http')
+        if proxy_host != None and proxy_port != None:
+            if is_secure:
+                self._imap = IMAP4SSLProxy(
+                                host=host,
+                                port=port,
+                                proxy_host=proxy_host,
+                                proxy_port=int(proxy_port),
+                                proxy_type=proxy_type)
+            else:
+                self._imap = IMAP4Proxy(
+                                host=host,
+                                port=port,
+                                proxy_host=proxy_host,
+                                proxy_port=int(proxy_port),
+                                proxy_type=proxy_type)
+        else:
+            self._imap = IMAP4_SSL(host, port) if is_secure else IMAP4(host, port)
         self._imap.login(kwargs.pop('user', None), kwargs.pop('password', None))
         self._imap.select(folder)
         self._init_multipart_walk()
