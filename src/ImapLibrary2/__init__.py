@@ -398,7 +398,10 @@ class ImapLibrary2(object):
         typ, msgnums = self._imap.uid('search', None, *criteria)
         if typ != 'OK':
             raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
-        return msgnums[0].split()
+        if msgnums[0] is not None:
+            return msgnums[0].split()
+        else:
+            return []
 
     @staticmethod
     def _criteria(**kwargs):
