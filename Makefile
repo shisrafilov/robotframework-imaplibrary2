@@ -34,8 +34,8 @@ version:
 	python -m robot.libdoc src/$(LIBRARY_NAME) version
 
 install_devel_deps:
-	pip install -e .
-	pip install coverage mock
+	pip3 install -e .
+	pip3 install coverage mock
 
 lint:clean
 	flake8 --max-complexity 10 src/$(LIBRARY_NAME)/*.py
@@ -53,7 +53,7 @@ github_doc:clean
 	git checkout gh-pages
 	git merge master
 	git push origin gh-pages
-	git checkout master	
+	git checkout master
 
 testpypi:clean_dist doc
 	python setup.py register -r test
