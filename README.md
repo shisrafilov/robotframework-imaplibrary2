@@ -1,7 +1,7 @@
 IMAP email testing library for Robot Framework
 ==============================================
 
-[Docs](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html)
+[Docs](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary2.html)
 
 Introduction
 ------------
@@ -13,7 +13,7 @@ ImapLibrary2 is a IMAP email testing library for [Robot
 Framework](http://goo.gl/lES6WM).
 
 More information about this library can be found in the [Keyword
-Documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html).
+Documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary2.html).
 
 If you are interested to contribute back to this project, please see
 **Contributing** section.
@@ -132,7 +132,7 @@ Directory Layout
 ----------------
 
 doc/
-:   [Keyword documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html)
+:   [Keyword documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary2.html)
 
 src/
 :   Python source code
@@ -164,7 +164,7 @@ Documentation](http://goo.gl/zy53tf).
 Building Keyword Documentation
 ------------------------------
 
-The [Keyword Documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary.html) can be found online,
+The [Keyword Documentation](https://lasselindqvist.github.io/robotframework-imaplibrary2/doc/ImapLibrary2.html) can be found online,
 if you need to generate the keyword documentation, run:
 
 ``` {.sourceCode .console}
