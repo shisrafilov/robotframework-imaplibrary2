@@ -170,6 +170,11 @@ if you need to generate the keyword documentation, run:
 ``` {.sourceCode .console}
 make doc
 ```
+or
+
+```
+python -m robot.libdoc src/ImapLibrary2 doc/ImapLibrary2.html
+```
 
 Run Unit Tests, and Test Coverage Report
 ----------------------------------------
