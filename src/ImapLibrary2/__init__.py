@@ -134,7 +134,7 @@ class ImapLibrary2(object):
         else:
             encoded_body = self._imap.uid('fetch', email_index, '(BODY[TEXT])')[1][0][1]
             try:
-                body = decode(encoded_body, 'quopri_codec').decode('UTF-8')
+                body = encoded_body.decode('UTF-8')
             except:
                 body = decode(encoded_body, 'quopri_codec').decode('ISO-8859-1')
         return body
