@@ -133,10 +133,15 @@ class ImapLibrary2(object):
             body = self.get_multipart_payload(decode=True)
         else:
             encoded_body = self._imap.uid('fetch', email_index, '(BODY[TEXT])')[1][0][1]
+            is_quoted_encoded = str(encoded_body).find("Content-Transfer-Encoding: quoted-printable")
+            if is_quoted_encoded > 0:
+                body_to_encode = decode(encoded_body, 'quopri_codec')
+            else:
+                body_to_encode = encoded_body
             try:
-                body = decode(encoded_body, 'quopri_codec').decode('UTF-8')
+                body = body_to_encode.decode('UTF-8')
             except:
-                body = decode(encoded_body, 'quopri_codec').decode('ISO-8859-1')
+                body = body_to_encode.decode('ISO-8859-1')
         return body
 
     def get_links_from_email(self, email_index):
@@ -395,10 +400,15 @@ class ImapLibrary2(object):
         status, data = self._imap.select(folder)
         if status != 'OK':
             raise Exception("imap.select error: %s, %s" % (status, data))
-        typ, msgnums = self._imap.uid('search', None, *criteria)
+        subject = kwargs.pop('subject', None)
+        if subject:
+            self._imap.literal = subject.encode("utf-8")
+        typ, msgnums = self._imap.uid('SEARCH', 'CHARSET', 'UTF-8', *criteria)
         if typ != 'OK':
             raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
         if msgnums[0] is not None:
+            if type(msgnums[0]) != bytes:
+                return msgnums[0].data
             return msgnums[0].split()
         else:
             return []
@@ -419,10 +429,10 @@ class ImapLibrary2(object):
             criteria += ['FROM', '"%s"' % sender]
         if cc:
             criteria += ['CC', '"%s"' % cc]
-        if subject:
-            criteria += ['SUBJECT', '"%s"' % subject]
         if text:
             criteria += ['TEXT', '"%s"' % text]
+        if subject:
+            criteria += ['SUBJECT']
         if status:
             criteria += [status]
         if not criteria:
@@ -449,3 +459,6 @@ class ImapLibrary2(object):
         """Saves all existing emails to internal variable."""
         typ, mails = self._imap.uid('search', None, 'ALL')
         self._mails = mails[0].split()
+
+    def get_is_mailbox_opened(self):
+        return self._imap is not None
