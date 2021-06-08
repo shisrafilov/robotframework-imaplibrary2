@@ -133,10 +133,15 @@ class ImapLibrary2(object):
             body = self.get_multipart_payload(decode=True)
         else:
             encoded_body = self._imap.uid('fetch', email_index, '(BODY[TEXT])')[1][0][1]
+            is_quoted_encoded = str(encoded_body).find("Content-Transfer-Encoding: quoted-printable")
+            if is_quoted_encoded > 0:
+                body_to_encode = decode(encoded_body, 'quopri_codec')
+            else:
+                body_to_encode = encoded_body
             try:
-                body = encoded_body.decode('UTF-8')
+                body = body_to_encode.decode('UTF-8')
             except:
-                body = decode(encoded_body, 'quopri_codec').decode('ISO-8859-1')
+                body = body_to_encode.decode('ISO-8859-1')
         return body
 
     def get_links_from_email(self, email_index):
@@ -395,7 +400,10 @@ class ImapLibrary2(object):
         status, data = self._imap.select(folder)
         if status != 'OK':
             raise Exception("imap.select error: %s, %s" % (status, data))
-        typ, msgnums = self._imap.uid('search', None, *criteria)
+        subject = kwargs.pop('subject', None)
+        if subject:
+            self._imap.literal = subject.encode("utf-8")
+        typ, msgnums = self._imap.uid('SEARCH', 'CHARSET', 'UTF-8', *criteria)
         if typ != 'OK':
             raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
         if msgnums[0] is not None:
@@ -420,7 +428,7 @@ class ImapLibrary2(object):
         if cc:
             criteria += ['CC', '"%s"' % cc]
         if subject:
-            criteria += ['SUBJECT', '"%s"' % subject]
+            criteria += ['SUBJECT']
         if text:
             criteria += ['TEXT', '"%s"' % text]
         if status:
