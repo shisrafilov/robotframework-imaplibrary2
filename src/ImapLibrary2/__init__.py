@@ -427,10 +427,10 @@ class ImapLibrary2(object):
             criteria += ['FROM', '"%s"' % sender]
         if cc:
             criteria += ['CC', '"%s"' % cc]
-        if subject:
-            criteria += ['SUBJECT']
         if text:
             criteria += ['TEXT', '"%s"' % text]
+        if subject:
+            criteria += ['SUBJECT']
         if status:
             criteria += [status]
         if not criteria:
