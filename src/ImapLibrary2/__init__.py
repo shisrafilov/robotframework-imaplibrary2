@@ -457,3 +457,6 @@ class ImapLibrary2(object):
         """Saves all existing emails to internal variable."""
         typ, mails = self._imap.uid('search', None, 'ALL')
         self._mails = mails[0].split()
+
+    def get_is_mailbox_opened(self):
+        return self._imap is not None
