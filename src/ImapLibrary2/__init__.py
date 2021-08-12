@@ -321,24 +321,26 @@ class ImapLibrary2(object):
         self._imap.select(folder)
         self._init_multipart_walk()
 
-    def open_mailbox_gmail_oauth(self, **kwargs):
-        """Open IMAP email client session to Gmail with given ``user`` and ``access_token``.
+    def open_mailbox_oauth(self, **kwargs):
+        """Open IMAP email client session to oauth provider with given ``user`` and ``access_token``.
         Arguments:
-        - ``debug_level``: An integer from 0 to 5 where 0 disables debug output and 5 enables full output with wire logging and parsing logs. (Default 0)
+        - ``host``: The IMAP host server. (Default None)
+		- ``debug_level``: An integer from 0 to 5 where 0 disables debug output and 5 enables full output with wire logging and parsing logs. (Default 0)
         - ``folder``: The email folder to read from. (Default INBOX)
         - ``user``: The username (email address) of the account to authenticate.
         - ``access_token``: An OAuth2 access token. Must not be base64-encoded, since imaplib does its own base64-encoding.
         
         Examples:
-        | Open Mailbox | debug_level=2 | user=email@gmail.com | access_token=SECRET |
-        | Open Mailbox | debug_level=0 | user=email@gmail.com | access_token=SECRET | folder=Drafts
+        | Open Mailbox | host=HOST | debug_level=2 | user=email@gmail.com | access_token=SECRET |
+        | Open Mailbox | host=HOST | debug_level=0 | user=email@gmail.com | access_token=SECRET | folder=Drafts
         """
-        debug_level = int(kwargs.pop('debug_level', 0))
+        host = kwargs.pop('host', kwargs.pop('server', None))
+		debug_level = int(kwargs.pop('debug_level', 0))
         folder = '"%s"' % str(kwargs.pop('folder', self.FOLDER))
         user = str(kwargs.pop('user', None))
         access_token = str(kwargs.pop('access_token', None))
         access_string = 'user=%s\1auth=Bearer %s\1\1' % (user, access_token)
-        self._imap = IMAP4_SSL('imap.gmail.com')
+        self._imap = IMAP4_SSL(host)
         self._imap.debug = debug_level
         self._imap.authenticate('XOAUTH2', lambda x: access_string)
         self._imap.select(folder)
