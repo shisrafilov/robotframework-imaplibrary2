@@ -407,6 +407,8 @@ class ImapLibrary2(object):
         if typ != 'OK':
             raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
         if msgnums[0] is not None:
+            if type(msgnums[0]) != bytes:
+                return msgnums[0].data
             return msgnums[0].split()
         else:
             return []
