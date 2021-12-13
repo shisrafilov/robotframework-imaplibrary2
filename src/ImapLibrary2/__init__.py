@@ -20,9 +20,9 @@ IMAP Library - a IMAP email testing library.
 """
 
 from email import message_from_bytes
+from email.header import decode_header
 from imaplib import IMAP4, IMAP4_SSL
 from re import findall
-from codecs import decode
 from time import sleep, time
 try:
     from urllib.request import urlopen
@@ -132,11 +132,18 @@ class ImapLibrary2(object):
         if self._is_walking_multipart(email_index):
             body = self.get_multipart_payload(decode=True)
         else:
-            encoded_body = self._imap.uid('fetch', email_index, '(BODY[TEXT])')[1][0][1]
-            try:
-                body = decode(encoded_body, 'quopri_codec').decode('UTF-8')
-            except:
-                body = decode(encoded_body, 'quopri_codec').decode('ISO-8859-1')
+            encodedMessage = self._imap.uid('fetch', email_index, '(BODY[])')[1][0][1]
+            msg = message_from_bytes(encodedMessage)
+            if not msg.is_multipart():
+                body = msg.get_payload(decode=True).decode()
+            else:
+                # decode the email subject
+                subject, encoding = decode_header(msg["Subject"])[0]
+                if isinstance(subject, bytes):
+                    # if it's a bytes, decode to str
+                    subject = subject.decode(encoding)
+                raise Exception("get_email_body called on multipart email '%s'. Pls first use method walk_multipart_email." % (subject))
+
         return body
 
     def get_links_from_email(self, email_index):
@@ -329,7 +336,7 @@ class ImapLibrary2(object):
         - ``folder``: The email folder to read from. (Default INBOX)
         - ``user``: The username (email address) of the account to authenticate.
         - ``access_token``: An OAuth2 access token. Must not be base64-encoded, since imaplib does its own base64-encoding.
-        
+
         Examples:
         | Open Mailbox | host=HOST | debug_level=2 | user=email@gmail.com | access_token=SECRET |
         | Open Mailbox | host=HOST | debug_level=0 | user=email@gmail.com | access_token=SECRET | folder=Drafts
