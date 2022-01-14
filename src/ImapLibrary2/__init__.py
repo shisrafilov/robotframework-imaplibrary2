@@ -142,7 +142,7 @@ class ImapLibrary2(object):
                 if isinstance(subject, bytes):
                     # if it's a bytes, decode to str
                     subject = subject.decode(encoding)
-                raise Exception("get_email_body called on multipart email '%s'. Pls first use method walk_multipart_email." % (subject))
+                raise Exception("get_email_body called on multipart email '%s'. Please first use method walk_multipart_email." % (subject))
 
         return body
 
