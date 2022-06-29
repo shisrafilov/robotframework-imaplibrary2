@@ -1,3 +1,21 @@
+0.4.2 (2022.02.04)
+==================
+
+* Fix decoding problems in email payload reading (#22)
+
+0.4.1 (2021.08.29)
+==================
+
+* Add new oauth open mailbox keyword (#20)
+
+0.4.0 (2021.08.29)
+==================
+
+0.3.2 (2019.08.99)
+==================
+
+* Properly release the fork as robotframework-imaplibrary2
+
 0.3.0 (2016.11.09)
 ==================
 
