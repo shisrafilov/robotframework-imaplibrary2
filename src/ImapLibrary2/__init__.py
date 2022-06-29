@@ -20,9 +20,9 @@ IMAP Library - a IMAP email testing library.
 """
 
 from email import message_from_bytes
+from email.header import decode_header
 from imaplib import IMAP4, IMAP4_SSL
 from re import findall
-from codecs import decode
 from time import sleep, time
 try:
     from urllib.request import urlopen
@@ -132,16 +132,18 @@ class ImapLibrary2(object):
         if self._is_walking_multipart(email_index):
             body = self.get_multipart_payload(decode=True)
         else:
-            encoded_body = self._imap.uid('fetch', email_index, '(BODY[TEXT])')[1][0][1]
-            is_quoted_encoded = str(encoded_body).find("Content-Transfer-Encoding: quoted-printable")
-            if is_quoted_encoded > 0:
-                body_to_encode = decode(encoded_body, 'quopri_codec')
+            encodedMessage = self._imap.uid('fetch', email_index, '(BODY[])')[1][0][1]
+            msg = message_from_bytes(encodedMessage)
+            if not msg.is_multipart():
+                body = msg.get_payload(decode=True).decode()
             else:
-                body_to_encode = encoded_body
-            try:
-                body = body_to_encode.decode('UTF-8')
-            except:
-                body = body_to_encode.decode('ISO-8859-1')
+                # decode the email subject
+                subject, encoding = decode_header(msg["Subject"])[0]
+                if isinstance(subject, bytes):
+                    # if it's a bytes, decode to str
+                    subject = subject.decode(encoding)
+                raise Exception("get_email_body called on multipart email '%s'. Please first use method walk_multipart_email." % (subject))
+
         return body
 
     def get_links_from_email(self, email_index):
@@ -326,6 +328,31 @@ class ImapLibrary2(object):
         self._imap.select(folder)
         self._init_multipart_walk()
 
+    def open_mailbox_oauth(self, **kwargs):
+        """Open IMAP email client session to oauth provider with given ``user`` and ``access_token``.
+        Arguments:
+        - ``host``: The IMAP host server. (Default None)
+        - ``debug_level``: An integer from 0 to 5 where 0 disables debug output and 5 enables full output with wire logging and parsing logs. (Default 0)
+        - ``folder``: The email folder to read from. (Default INBOX)
+        - ``user``: The username (email address) of the account to authenticate.
+        - ``access_token``: An OAuth2 access token. Must not be base64-encoded, since imaplib does its own base64-encoding.
+
+        Examples:
+        | Open Mailbox | host=HOST | debug_level=2 | user=email@gmail.com | access_token=SECRET |
+        | Open Mailbox | host=HOST | debug_level=0 | user=email@gmail.com | access_token=SECRET | folder=Drafts
+        """
+        host = kwargs.pop('host', kwargs.pop('server', None))
+        debug_level = int(kwargs.pop('debug_level', 0))
+        folder = '"%s"' % str(kwargs.pop('folder', self.FOLDER))
+        user = str(kwargs.pop('user', None))
+        access_token = str(kwargs.pop('access_token', None))
+        access_string = 'user=%s\1auth=Bearer %s\1\1' % (user, access_token)
+        self._imap = IMAP4_SSL(host)
+        self._imap.debug = debug_level
+        self._imap.authenticate('XOAUTH2', lambda x: access_string)
+        self._imap.select(folder)
+        self._init_multipart_walk()
+
     def wait_for_email(self, **kwargs):
         """Wait for email message to arrived base on any given filter criteria.
         Returns email index of the latest email message received.
@@ -429,10 +456,10 @@ class ImapLibrary2(object):
             criteria += ['FROM', '"%s"' % sender]
         if cc:
             criteria += ['CC', '"%s"' % cc]
+        if subject:
+            criteria += ['SUBJECT', '"%s"' % subject]
         if text:
             criteria += ['TEXT', '"%s"' % text]
-        if subject:
-            criteria += ['SUBJECT']
         if status:
             criteria += [status]
         if not criteria:
@@ -459,6 +486,3 @@ class ImapLibrary2(object):
         """Saves all existing emails to internal variable."""
         typ, mails = self._imap.uid('search', None, 'ALL')
         self._mails = mails[0].split()
-
-    def get_is_mailbox_opened(self):
-        return self._imap is not None
