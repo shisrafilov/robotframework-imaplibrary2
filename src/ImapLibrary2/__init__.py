@@ -427,10 +427,15 @@ class ImapLibrary2(object):
         status, data = self._imap.select(folder)
         if status != 'OK':
             raise Exception("imap.select error: %s, %s" % (status, data))
-        typ, msgnums = self._imap.uid('search', None, *criteria)
+        subject = kwargs.pop('subject', None)
+        if subject:
+            self._imap.literal = subject.encode("utf-8")
+        typ, msgnums = self._imap.uid('SEARCH', 'CHARSET', 'UTF-8', *criteria)
         if typ != 'OK':
             raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
         if msgnums[0] is not None:
+            if type(msgnums[0]) != bytes:
+                return msgnums[0].data
             return msgnums[0].split()
         else:
             return []
