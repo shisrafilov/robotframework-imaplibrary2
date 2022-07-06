@@ -430,12 +430,12 @@ class ImapLibrary2(object):
         subject = kwargs.pop('subject', None)
         if subject:
             self._imap.literal = subject.encode("utf-8")
-        typ, msgnums = self._imap.uid('SEARCH', 'CHARSET', 'UTF-8', *criteria)
+        typ, msgnums = self._imap.uid('search', None, *criteria)
         if typ != 'OK':
             raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
         if msgnums[0] is not None:
             if type(msgnums[0]) != bytes:
-                return msgnums[0].data
+                return msgnums[0]
             return msgnums[0].split()
         else:
             return []
@@ -456,10 +456,10 @@ class ImapLibrary2(object):
             criteria += ['FROM', '"%s"' % sender]
         if cc:
             criteria += ['CC', '"%s"' % cc]
-        if subject:
-            criteria += ['SUBJECT', '"%s"' % subject]
         if text:
             criteria += ['TEXT', '"%s"' % text]
+        if subject:
+            criteria += ['SUBJECT']
         if status:
             criteria += [status]
         if not criteria:
